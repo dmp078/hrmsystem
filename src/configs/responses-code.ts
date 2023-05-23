@@ -1,0 +1,3 @@
+export const RESPONSE_SUCCESS = 200;
+export const RESPONSE_NOT_FOUND = 404;
+export const RESPONSE_INTERAL_SERVER_ERROR = 500;
