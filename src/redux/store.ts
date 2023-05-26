@@ -1,5 +1,5 @@
 import { applyMiddleware, createStore } from "redux";
-import { rootReducer } from "./rootReducer";
+import { rootReducer } from "./reducer/root/rootReducer";
 import thunk from "redux-thunk";
 import { persistStore } from "redux-persist";
 

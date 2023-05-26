@@ -35,8 +35,5 @@ html {
 }
 }
 
-/* td, th {
-  padding: 10px;
-} */
-
+.required:after { content:"*"; color: red }
 	

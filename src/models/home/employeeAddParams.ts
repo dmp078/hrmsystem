@@ -12,24 +12,25 @@ export interface IemployeeInformationParams {
   tel_no: number;
   marriage_id: number;
   bank_account_no: number;
-  bank_name: number;
+  bank_name: string;
   family_card_number: number;
   safety_insurance_no: number;
   health_insurance_no: number;
+  mother_name: string;
 }
 
 export interface IcontractInformationParams {
-  contract_start_date: number; // yyyy-mm-dd
+  contract_start_date: string; // yyyy-mm-dd
   type: number; // (0: Permanent, 1: Part-time worker, 2: Contract worker)
 }
 
 export interface IemploymentDetailsParams {
   department_id: number;
   position_id: number;
-  entitle_ot: number;
-  meal_allowance_paid: number;
-  operational_allowance_paid: number;
-  attendance_allowance_paid: number;
+  entitle_ot: string | number;
+  meal_allowance_paid: string | number;
+  operational_allowance_paid: string | number;
+  attendance_allowance_paid: string | number;
 }
 
 export interface IsalaryWagesParams {

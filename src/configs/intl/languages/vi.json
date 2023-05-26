@@ -4,6 +4,7 @@
   "auth.hr.management.system": "Hệ thống quản lý nhân sự",
   "auth.username": "Tên người dùng",
   "auth.password": "Mật khẩu",
+  "auth.confirm.password": "Xác nhận mật khẩu",
   "auth.factory": "Công ty",
   "auth.email": "Email",
   "auth.change.password": "Thay đổi mật khẩu",
@@ -71,10 +72,41 @@
   "add.health.insurance.no": "Số bảo hiểm y tế",
 
   "add.contract.information": "Thông tin hợp đồng",
+  "add.employee.type": "Loại hợp đồng",
+  "add.date.start": "Ngày bắt đầu",
+  "part.time": "Bán thời gian",
+  "full.time": "Toàn thời gian",
+  "add.contract.date": "Ngày ký hợp đồng",
+  "add.contract.name": "Tên hợp đồng",
+
+  "required": "Bắt buộc",
+  "add.select.gender": "Chọn giới tính",
+  "add.select.marriage": "Hôn nhân",
+
   "add.employment.details": "Chi tiết việc làm",
+  "add.department": "Chung cư",
+  "add.position": "Vị trí",
+  "add.entitled.ot": "Entitled OT",
+  "add.meal_allowance.paid": "Meal Allowance Paid",
+  "add.operational.allowance.paid": "Operational Allowance Paid",
+  "add.attendance.allowance.paid": "Attendance Allowance Paid",
+
   "add.salary.wages": "Tiền lương & công",
+  "add.basic.salary": "Basic Salary",
+  "add.basic.salary.audit": "Basic Salary (Audit)",
+  "add.safety.insurance.amount": "Safety Insurance Amount",
+  "add.healthy.insurance.amount": "Healthy Insurance Amount",
+  "add.meal.allowance": "Meal Allowance",
+  
   "add.others": "Khác",
-  "required": "Bắt buộc"
+  "add.grade": "Grade",
+  "add.benefit": "Benefit",
+  "add.remark": "Remark",
+  "add.hrm.user.account": "HRM User Account",
+  
+  "married": "Kết hôn",
+  "single": "Độc thân"
+
 
 
 }

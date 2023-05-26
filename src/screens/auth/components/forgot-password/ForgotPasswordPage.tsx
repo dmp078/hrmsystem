@@ -20,11 +20,7 @@ const ForgotPasswordPage = () => {
 
   return (
     <>
-      <ForgotPasswordForm
-        showToast={showToast}
-        toggleToast={toggleToast}
-        formik={formik}
-      />
+      <ForgotPasswordForm showToast={showToast} toggleToast={toggleToast} formik={formik} />
     </>
   );
 };

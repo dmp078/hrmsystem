@@ -4,6 +4,7 @@
   "auth.hr.management.system": "HR Management System",
   "auth.username": "Username",
   "auth.password": "Password",
+  "auth.confirm.password": "Confirm password",
   "auth.factory": "Factory",
   "auth.email": "Email",
   "auth.change.password": "Change password",
@@ -48,6 +49,7 @@
   "employee.confirm.delete": "Are you sure you want to delete?",
   "yes": "Yes",
   "no": "No",
+
   "add.employee.information": "Employee Information",
   "add.personal.information": "Persional Information",
   "add.name": "Name", 
@@ -60,8 +62,8 @@
   "add.national.id.card": "National Card ID",
   "add.home.address.1": "Home Address 1",
   "add.home.address.2": "Home Address 2",
-  "add.mobile.no": "Mobile no",
-  "add.tel.no": "Tel no",
+  "add.mobile.no": "Mobile No",
+  "add.tel.no": "Tel No",
   "add.marriage.status": "Marriage Status",
   "add.bank.card.no": "Bank Card No.",
   "add.bank.account.no": "Bank Account No.",
@@ -71,10 +73,39 @@
   "add.health.insurance.no": "Health Insurance No.",
 
   "add.contract.information": "Contract Information",
-  "add.employment.details": "Employment Details",
-  "add.salary.wages": "Salary & Wages",
-  "add.others": "Others",
+  "add.employee.type": "Employee Type",
+  "add.date.start": "Date start",
+  "part.time": "Part time",
+  "full.time": "Full time",
+  "add.contract.date": "Contract Date",
+  "add.contract.name": "Contract Name",
 
-  "required": "Required"
+
+  "add.employment.details": "Employment Details",
+  "add.department": "Department",
+  "add.position": "Position",
+  "add.entitled.ot": "Entitled OT",
+  "add.meal_allowance.paid": "Meal Allowance Paid",
+  "add.operational.allowance.paid": "Operational Allowance Paid",
+  "add.attendance.allowance.paid": "Attendance Allowance Paid",
+
+  "add.salary.wages": "Salary & Wages",
+  "add.basic.salary": "Basic Salary",
+  "add.basic.salary.audit": "Basic Salary (Audit)",
+  "add.safety.insurance.amount": "Safety Insurance Amount",
+  "add.healthy.insurance.amount": "Healthy Insurance Amount",
+  "add.meal.allowance": "Meal Allowance",
+  
+  "add.others": "Others",
+  "add.grade": "Grade",
+  "add.benefit": "Benefit",
+  "add.remark": "Remark",
+  "add.hrm.user.account": "HRM User Account",
+
+  "required": "Required",
+  "add.select.gender": "Select gender",
+  "add.select.marriage": "Select marriage",
+  "married": "Married",
+  "single": "Single"
 
 }

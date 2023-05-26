@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { IforgotPasswordParams } from "../../../../models/auth/forgotPasswordAuth";
@@ -24,11 +24,7 @@ const ForgotPasswordForm = (props: Props) => {
       {showToast && (
         <div className="absolute top-6 right-6 py-3 px-4 gap-3 rounded-lg flex justify-between bg-red-600/[.2] text-red-600">
           <FormattedMessage id="auth.wrong.information" />
-          <FontAwesomeIcon
-            className="my-auto cursor-pointer"
-            icon={faCircleXmark}
-            onClick={() => toggleToast(false)}
-          />
+          <FontAwesomeIcon className="my-auto cursor-pointer" icon={faCircleXmark} onClick={() => toggleToast(false)} />
         </div>
       )}
       <div className="mx-auto mt-10">
@@ -40,11 +36,7 @@ const ForgotPasswordForm = (props: Props) => {
         </div>
 
         {/* form login */}
-        <form
-          onSubmit={formik.handleSubmit}
-          action=""
-          className="p-6 bg-[#FBFCFD] mt-6 rounded-xl flex flex-col gap-6"
-        >
+        <form onSubmit={formik.handleSubmit} action="" className="p-6 bg-[#FBFCFD] mt-6 rounded-xl flex flex-col gap-6">
           <div className="flex flex-col gap-2 font-semibold">
             <FormattedMessage id="auth.email" />
             <input
@@ -54,9 +46,7 @@ const ForgotPasswordForm = (props: Props) => {
               value={formik.values.email}
               onChange={formik.handleChange}
               className={`${
-                formik.errors.email
-                  ? "bg-[#ff9494]/[.2] border-2 border-[#ff9494]/[.2]"
-                  : "bg-[#F1F3F5]"
+                formik.errors.email ? "bg-[#ff9494]/[.2] border-2 border-[#ff9494]/[.2]" : "bg-[#F1F3F5]"
               } w-full p-3 outline-none rounded-xl`}
             />
             {!!formik.errors.email && (
@@ -69,10 +59,7 @@ const ForgotPasswordForm = (props: Props) => {
           <Button type="submit" className="p-3">
             <FormattedMessage id="auth.confirm.send.otp" />
           </Button>
-          <Link
-            to={"../" + ROUTES.login}
-            className="text-[#0091FF] text-center no-underline"
-          >
+          <Link to={"../" + ROUTES.login} className="text-[#0091FF] text-center no-underline">
             <FormattedMessage id="auth.back.to.signin" />
           </Link>
         </form>
@@ -81,4 +68,4 @@ const ForgotPasswordForm = (props: Props) => {
   );
 };
 
-export default ForgotPasswordForm;
+export default memo(ForgotPasswordForm);

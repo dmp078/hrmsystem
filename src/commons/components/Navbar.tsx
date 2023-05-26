@@ -1,15 +1,16 @@
-import React, { useRef, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import { logoEngland, logoHR, logoVN } from "../../assets/images";
 import { FormattedMessage } from "react-intl";
 import { Button, Dropdown, Modal } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { INTL_ACTIONS } from "../../configs/intl/redux/actions";
+import { INTL_ACTIONS } from "../../redux/actions/intl/actions";
 import { LANGUAGES } from "../../configs/intl/languages/languages";
 import { RootState } from "../../redux/store";
 import { onLogout } from "../../services/auth/logout";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../configs/routes/ROUTES";
 import { useOnClickOutside } from "../hooks/useClickOutside";
+import { updateLang } from "../../services/intl/updateLang";
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const Navbar = () => {
   const lang = useSelector((state: RootState) => state.intl.lang);
 
   const handleUpdateLanguage = (language: string) => {
-    dispatch({ type: INTL_ACTIONS.SET_LANG, payload: language });
+    updateLang(language);
   };
 
   const handleLogout = () => {
@@ -41,28 +42,18 @@ const Navbar = () => {
 
       <div className="flex gap-4">
         <Dropdown className="my-auto">
-          <Dropdown.Toggle
-            className="py-0 my-auto"
-            style={{ backgroundColor: "#F1F3F5", outline: "none" }}
-            variant=""
-          >
+          <Dropdown.Toggle className="py-0 my-auto" style={{ backgroundColor: "#F1F3F5", outline: "none" }} variant="">
             <FormattedMessage id={`language.${lang}`} />
           </Dropdown.Toggle>
           <Dropdown.Menu>
             <Dropdown.Item>
-              <div
-                className="flex gap-2"
-                onClick={() => handleUpdateLanguage(LANGUAGES.ENGLISH)}
-              >
+              <div className="flex gap-2" onClick={() => handleUpdateLanguage(LANGUAGES.ENGLISH)}>
                 <img src={logoEngland} className="w-6" alt="" />
                 <FormattedMessage id={`language.${LANGUAGES.ENGLISH}`} />
               </div>
             </Dropdown.Item>
             <Dropdown.Item>
-              <div
-                className="flex gap-2"
-                onClick={() => handleUpdateLanguage(LANGUAGES.VIETNAM)}
-              >
+              <div className="flex gap-2" onClick={() => handleUpdateLanguage(LANGUAGES.VIETNAM)}>
                 <img src={logoVN} className="w-6" alt="" />
                 <FormattedMessage id={`language.${LANGUAGES.VIETNAM}`} />
               </div>
@@ -90,17 +81,11 @@ const Navbar = () => {
                 <h3 className="my-auto text-sm">NIK: PGA0047</h3>
               </div>
 
-              <Button
-                onClick={() => setShowModal(true)}
-                className="w-full mb-2"
-              >
+              <Button onClick={() => setShowModal(true)} className="w-full mb-2">
                 <FormattedMessage id="auth.signout" />
               </Button>
 
-              <a
-                href={ROUTES.settings}
-                className="text-[#0091FF] no-underline mx-auto"
-              >
+              <a href={ROUTES.settings} className="text-[#0091FF] no-underline mx-auto">
                 <FormattedMessage id="auth.change.password" />
               </a>
             </div>
@@ -125,4 +110,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default memo(Navbar);

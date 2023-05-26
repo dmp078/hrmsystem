@@ -1,5 +1,3 @@
-// ConnectedIntlProvider.js
-
 import { connect } from "react-redux";
 import { IntlProvider } from "react-intl";
 import { getLanguageSource } from "./getIntlLanguage";

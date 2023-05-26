@@ -47,16 +47,6 @@ const LoginForm = (props: Props) => {
         </div>
       )}
 
-      {/* {showToastSuccess && (
-        <div className="absolute top-6 right-6 py-3 px-4 gap-3 rounded-lg flex justify-between bg-green-600/[.2] text-green-600">
-          <FormattedMessage id="auth.matched.information" />
-          <FontAwesomeIcon
-            className="my-auto cursor-pointer"
-            icon={faCircleXmark}
-            onClick={() => toggleToastSuccess(false)}
-          />
-        </div>
-      )} */}
       <div className="mx-auto mt-10">
         <img className="mx-auto" src={logoHR} alt="" />
         <div className="flex flex-col text-center font-semibold text-3xl">
@@ -84,9 +74,7 @@ const LoginForm = (props: Props) => {
                 value={formik.values.username}
                 onChange={formik.handleChange}
                 className={`${
-                  formik.errors.username
-                    ? "bg-[#ff9494]/[.2] border-2 border-[#ff9494]/[.2]"
-                    : "bg-[#F1F3F5]"
+                  formik.errors.username ? "bg-[#ff9494]/[.2] border-2 border-[#ff9494]/[.2]" : "bg-[#F1F3F5]"
                 } w-full p-3 outline-none rounded-xl`}
               />
               {!!formik.errors.username && (
@@ -113,9 +101,7 @@ const LoginForm = (props: Props) => {
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 className={`${
-                  formik.errors.password
-                    ? "bg-[#ff9494]/[.2] border-2 border-[#ff9494]/[.2]"
-                    : "bg-[#F1F3F5]"
+                  formik.errors.password ? "bg-[#ff9494]/[.2] border-2 border-[#ff9494]/[.2]" : "bg-[#F1F3F5]"
                 } w-full p-3 outline-none rounded-xl`}
               />
 
@@ -155,14 +141,8 @@ const LoginForm = (props: Props) => {
                     <Dropdown.Item
                       key={index}
                       style={{
-                        color: `${
-                          company.name == companyActive ? "green" : ""
-                        }`,
-                        backgroundColor: `${
-                          company.name == companyActive
-                            ? "rgba(0, 247, 91, 0.1)"
-                            : ""
-                        }`,
+                        color: `${company.name == companyActive ? "green" : ""}`,
+                        backgroundColor: `${company.name == companyActive ? "rgba(0, 247, 91, 0.1)" : ""}`,
                       }}
                       onClick={() => handleChangeCompanyActive(company.id)}
                       className="py-3 w-full"
@@ -181,21 +161,11 @@ const LoginForm = (props: Props) => {
             </div>
           </div>
 
-          <Button
-            disabled={loading ? true : false}
-            type="submit"
-            className="p-3"
-          >
-            <Spinner
-              hidden={loading ? false : true}
-              style={{ width: "20px", height: "20px", marginRight: "10px" }}
-            />
+          <Button disabled={loading ? true : false} type="submit" className="p-3">
+            <Spinner hidden={loading ? false : true} style={{ width: "20px", height: "20px", marginRight: "10px" }} />
             <FormattedMessage id="auth.signin" />
           </Button>
-          <Link
-            to={"../" + ROUTES.forgotPassword}
-            className="text-[#0091FF] text-center no-underline"
-          >
+          <Link to={"../" + ROUTES.forgotPassword} className="text-[#0091FF] text-center no-underline">
             <FormattedMessage id="auth.forgot.password" />
           </Link>
         </form>
