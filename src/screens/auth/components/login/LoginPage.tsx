@@ -6,15 +6,14 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { onLogin } from "../../../../services/auth/login";
 import { useDispatch } from "react-redux";
-import { RESPONSE_SUCCESS } from "../../../../configs/responses-code";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const [companies, setCompanies] = useState<Array<any>>([]);
   const [companyActive, setCompanyActive] = useState<string | null>(null);
-  const [forceRender, setForceRender] = useState<boolean>(false);
   const [showToastEr, setShowToastEr] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [viewPassWord, setViewPassword] = useState<boolean>(false);
 
   useEffect(() => {
     getCompany().then((res) => setCompanies(res));
@@ -59,20 +58,8 @@ const LoginPage = () => {
     setCompanyActive(companiesActive.length ? companiesActive[0]["name"] : "");
   };
 
-  const forceRenderComponent = () => {
-    setForceRender((pre) => !pre);
-  };
-
-  const handleDeleteUsername = () => {
-    formik.values.username = "";
-    formik.errors.username = undefined;
-    forceRenderComponent();
-  };
-
-  const handleDeletePassword = () => {
-    formik.values.password = "";
-    formik.errors.password = undefined;
-    forceRenderComponent();
+  const toggleViewPassword = () => {
+    setViewPassword((pre) => !pre);
   };
 
   const toggleToastEr = (payload: boolean) => {
@@ -85,12 +72,12 @@ const LoginPage = () => {
         loading={loading}
         showToastEr={showToastEr}
         toggleToastEr={toggleToastEr}
-        handleDeleteUsername={handleDeleteUsername}
-        handleDeletePassword={handleDeletePassword}
         companyActive={companyActive}
         handleChangeCompanyActive={handleChangeCompanyActive}
         formik={formik}
         companies={companies}
+        viewPassword={viewPassWord}
+        toggleViewPassword={toggleViewPassword}
       />
     </>
   );

@@ -6,6 +6,7 @@ export const ROUTES = {
   settings: "settings",
   login: "login",
   forgotPassword: "forgot-password",
+  resetPassword: "reset-password",
   attendance: "attendance",
   leave: "leave",
   payroll: "payroll",

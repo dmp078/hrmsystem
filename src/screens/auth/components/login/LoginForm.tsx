@@ -7,18 +7,18 @@ import { Link, Navigate } from "react-router-dom";
 
 import { ROUTES } from "../../../../configs/routes/ROUTES";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import { faCircleXmark, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
   companies: Array<any>;
   formik: any;
   handleChangeCompanyActive: (id: number) => void;
   companyActive: string | null;
-  handleDeleteUsername: () => void;
-  handleDeletePassword: () => void;
   showToastEr: boolean;
   toggleToastEr: (payload: boolean) => void;
   loading: boolean;
+  viewPassword: boolean;
+  toggleViewPassword: () => void;
 }
 
 const LoginForm = (props: Props) => {
@@ -27,15 +27,15 @@ const LoginForm = (props: Props) => {
     formik,
     handleChangeCompanyActive,
     companyActive,
-    handleDeleteUsername,
-    handleDeletePassword,
     showToastEr,
     toggleToastEr,
     loading,
+    viewPassword,
+    toggleViewPassword,
   } = props;
 
   return (
-    <div className="flex bg-[#F3F3F3] relative">
+    <div className="flex bg-[#F3F3F3] pb-6 relative">
       {showToastEr && (
         <div className="absolute top-6 right-6 py-3 px-4 gap-3 rounded-lg flex justify-between bg-red-600/[.2] text-red-600">
           <FormattedMessage id="auth.wrong.information" />
@@ -78,14 +78,6 @@ const LoginForm = (props: Props) => {
                 } w-full p-3 outline-none rounded-xl`}
               />
               {!!formik.errors.username && (
-                <FontAwesomeIcon
-                  onClick={handleDeleteUsername}
-                  className="text-red-600 absolute top-10 right-1 text-2xl cursor-pointer"
-                  icon={faCircleXmark}
-                />
-              )}
-
-              {!!formik.errors.username && (
                 <div className="text-red-500">
                   <FormattedMessage id={formik.errors.username} />
                 </div>
@@ -94,24 +86,32 @@ const LoginForm = (props: Props) => {
 
             <div className="relative">
               <FormattedMessage id="auth.password" />
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={formik.values.password}
-                onChange={formik.handleChange}
-                className={`${
-                  formik.errors.password ? "bg-[#ff9494]/[.2] border-2 border-[#ff9494]/[.2]" : "bg-[#F1F3F5]"
-                } w-full p-3 outline-none rounded-xl`}
-              />
-
-              {!!formik.errors.password && (
-                <FontAwesomeIcon
-                  onClick={handleDeletePassword}
-                  className="text-red-600 absolute top-10 right-1 text-2xl cursor-pointer"
-                  icon={faCircleXmark}
+              <div className="flex">
+                <input
+                  type={`${viewPassword ? "text" : "password"}`}
+                  id="password"
+                  name="password"
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
+                  className={`${
+                    formik.errors.password ? "bg-[#ff9494]/[.2] border-2 border-[#ff9494]/[.2]" : "bg-[#F1F3F5]"
+                  } w-full p-3 outline-none rounded-xl`}
                 />
-              )}
+                {viewPassword && (
+                  <FontAwesomeIcon
+                    onClick={toggleViewPassword}
+                    className="cursor-pointer absolute top-11 right-3"
+                    icon={faEye}
+                  />
+                )}
+                {!viewPassword && (
+                  <FontAwesomeIcon
+                    onClick={toggleViewPassword}
+                    className="cursor-pointer absolute top-11 right-3"
+                    icon={faEyeSlash}
+                  />
+                )}
+              </div>
 
               {!!formik.errors.password && (
                 <div className="text-red-500">

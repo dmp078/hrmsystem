@@ -2,23 +2,21 @@ import React, { memo, useRef, useState } from "react";
 import { logoEngland, logoHR, logoVN } from "../../assets/images";
 import { FormattedMessage } from "react-intl";
 import { Button, Dropdown, Modal } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import { INTL_ACTIONS } from "../../redux/actions/intl/actions";
+import { useSelector } from "react-redux";
 import { LANGUAGES } from "../../configs/intl/languages/languages";
 import { RootState } from "../../redux/store";
 import { onLogout } from "../../services/auth/logout";
-import { Link } from "react-router-dom";
 import { ROUTES } from "../../configs/routes/ROUTES";
 import { useOnClickOutside } from "../hooks/useClickOutside";
 import { updateLang } from "../../services/intl/updateLang";
 
 const Navbar = () => {
-  const dispatch = useDispatch();
   const refModalProfile = useRef(null);
   const [showModalProfile, setShowModalProfile] = useState(false);
   const [showModal, setShowModal] = useState(false);
 
   const lang = useSelector((state: RootState) => state.intl.lang);
+  const auth = useSelector((state: RootState) => state.auth);
 
   const handleUpdateLanguage = (language: string) => {
     updateLang(language);
@@ -77,7 +75,7 @@ const Navbar = () => {
                 <h3 className="my-auto text-md">Phuong</h3>
               </div>
               <div className="flex flex-col gap-2 mb-6">
-                <h3 className="my-auto text-sm">Sew Department</h3>
+                <h3 className="my-auto text-sm">{auth.department}</h3>
                 <h3 className="my-auto text-sm">NIK: PGA0047</h3>
               </div>
 
@@ -85,7 +83,7 @@ const Navbar = () => {
                 <FormattedMessage id="auth.signout" />
               </Button>
 
-              <a href={ROUTES.settings} className="text-[#0091FF] no-underline mx-auto">
+              <a href={ROUTES.home + "/" + ROUTES.settings} className="text-[#0091FF] no-underline mx-auto">
                 <FormattedMessage id="auth.change.password" />
               </a>
             </div>

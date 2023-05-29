@@ -3,6 +3,10 @@ import { AUTH_ACTIONS } from "../../actions/auth/actions";
 
 export const initValueAuth: IauthState = {
   token: null,
+  username: null,
+  department: null,
+  email: null,
+  id: null,
 };
 
 interface IactionAuth {

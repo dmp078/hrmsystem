@@ -17,6 +17,8 @@ import { getGrade } from "../../../../../../../services/home/employee/Others/get
 import { addEmployee } from "../../../../../../../services/home/employee/addEmployee/addEmployee";
 import { getMarriageStatus } from "../../../../../../../services/home/employee/employeeInformation/getMarriageStatus";
 import { listRequirer } from "../../../../../../../assets/constants/listRequirer";
+import { getContract } from "../../../../../../../services/home/employee/contract/getContract";
+import { addContract } from "../../../../../../../services/home/employee/contract/addContract";
 
 const AddEmployee = () => {
   const [path, setPath] = useState<string>(window.location.pathname);
@@ -75,12 +77,15 @@ const AddEmployee = () => {
   const [listPosition, setListPosition] = useState<Array<any>>([]);
   const [listGrade, setListGrade] = useState<Array<any>>([]);
   const [listBenefits, setListBenefits] = useState<Array<any>>([]);
+  const [listContract, setListContract] = useState<Array<any>>([]);
+  const [errorContract, setErrorContract] = useState<any>("");
 
   useEffect(() => {
     getDepartment().then((res) => setListDepartment(res));
     getPosition().then((res) => setListPosition(res));
     getGrade().then((res) => setListGrade(res));
     getMarriageStatus().then((res) => setMarriages(res));
+    getContract().then((res) => setListContract(res));
   }, []);
 
   useEffect(() => {
@@ -116,7 +121,16 @@ const AddEmployee = () => {
     setOthers((pre) => ({ ...pre, [property]: value }));
   };
 
-  const handleDddEmployee = async () => {
+  const handleAddContract = async (file: any, date: string, contract_name: string) => {
+    try {
+      await addContract(file, date, contract_name);
+      getContract().then((res) => setListContract(res));
+    } catch (er: any) {
+      setErrorContract(er);
+    }
+  };
+
+  const handleAddEmployee = async () => {
     const eInforFilter = Object.entries(employeeInformation).filter((item: any) => item[1] !== -1 && item[1] !== "");
     const eInforDataToPass = Object.fromEntries(eInforFilter);
 
@@ -143,6 +157,11 @@ const AddEmployee = () => {
       alert(er);
     }
   };
+
+  const removeErrorContract = () => {
+    setErrorContract(false);
+  };
+
   return (
     <div className="relative w-[45vw] lg:w-[65vw] h-screen ">
       <div className="flex gap-2 text-sm ">
@@ -164,7 +183,7 @@ const AddEmployee = () => {
           <FormattedMessage id="home.employee" />
         </div>
         <Button
-          onClick={handleDddEmployee}
+          onClick={handleAddEmployee}
           disabled={
             listRequirer.eInfor.filter(
               (field) =>
@@ -322,6 +341,10 @@ const AddEmployee = () => {
               updateOthers,
               salaryWages,
               marriages,
+              listContract,
+              handleAddContract,
+              errorContract,
+              removeErrorContract,
             },
           ]}
         />

@@ -1,29 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect, lazy } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import LoginPage from "./screens/auth/components/login/LoginPage";
-import HomePage from "./screens/home/pages/HomePage";
 import PrivateRouter from "./commons/components/PrivateRouter";
 import { ROUTES } from "./configs/routes/ROUTES";
-import ForgotPasswordPage from "./screens/auth/components/forgot-password/ForgotPasswordPage";
 import { home } from "./configs/routes/baseRoutes";
-import AuthPage from "./screens/auth/pages/AuthPage";
 import { useSelector } from "react-redux";
 import { RootState } from "./redux/store";
-import AttendencePage from "./screens/home/outlets/attendence/pages/AttendencePage";
-import LeavePage from "./screens/home/outlets/leave/LeavePage";
-import PayrollPage from "./screens/home/outlets/payroll/PayrollPage";
-import EmployeePage from "./screens/home/outlets/employee/pages/EmployeePage";
-import EmployeeForm from "./screens/home/outlets/employee/outlets/EmployeeManagement/EmployeeForm";
-import AddEmployee from "./screens/home/outlets/employee/outlets/AddEmployee/pages/AddEmployee";
-import EmployeeInformation from "./screens/home/outlets/employee/outlets/AddEmployee/outlets/EmployeeInformation";
-import ContractInformation from "./screens/home/outlets/employee/outlets/AddEmployee/outlets/ContractInformation";
-import EmploymentDetails from "./screens/home/outlets/employee/outlets/AddEmployee/outlets/EmploymentDetails";
-import SalaryWages from "./screens/home/outlets/employee/outlets/AddEmployee/outlets/SalaryWages";
-import Others from "./screens/home/outlets/employee/outlets/AddEmployee/outlets/Others";
-import UserPage from "./screens/home/outlets/user/UserPage";
-import MasterPage from "./screens/home/outlets/master/MasterPage";
-import SettingsPage from "./screens/home/outlets/settings/SettingsPage";
-import NotFound from "./screens/others/NotFound";
+import SuspenseWrapper from "./commons/components/SuspenseWrapper";
+
+const AuthPage = lazy(() => import("./screens/auth/pages/AuthPage"));
+const LoginPage = lazy(() => import("./screens/auth/components/login/LoginPage"));
+const ForgotPasswordPage = lazy(() => import("./screens/auth/components/forgot-password/ForgotPasswordPage"));
+const ResetPassword = lazy(() => import("./screens/auth/components/reset-password/ResetPassword"));
+
+const HomePage = lazy(() => import("./screens/home/pages/HomePage"));
+const AttendencePage = lazy(() => import("./screens/home/outlets/attendence/pages/AttendencePage"));
+const LeavePage = lazy(() => import("./screens/home/outlets/leave/LeavePage"));
+const MasterPage = lazy(() => import("./screens/home/outlets/master/MasterPage"));
+const SettingsPage = lazy(() => import("./screens/home/outlets/settings/SettingsPage"));
+const UserPage = lazy(() => import("./screens/home/outlets/user/UserPage"));
+const PayrollPage = lazy(() => import("./screens/home/outlets/payroll/PayrollPage"));
+const EmployeePage = lazy(() => import("./screens/home/outlets/employee/pages/EmployeePage"));
+const EmployeeForm = lazy(() => import("./screens/home/outlets/employee/outlets/EmployeeManagement/EmployeeForm"));
+const AddEmployee = lazy(() => import("./screens/home/outlets/employee/outlets/AddEmployee/pages/AddEmployee"));
+
+const EmployeeInformation = lazy(
+  () => import("./screens/home/outlets/employee/outlets/AddEmployee/outlets/EmployeeInformation")
+);
+const ContractInformation = lazy(
+  () => import("./screens/home/outlets/employee/outlets/AddEmployee/outlets/ContractInformation")
+);
+const EmploymentDetails = lazy(
+  () => import("./screens/home/outlets/employee/outlets/AddEmployee/outlets/EmploymentDetails")
+);
+const SalaryWages = lazy(() => import("./screens/home/outlets/employee/outlets/AddEmployee/outlets/SalaryWages"));
+const Others = lazy(() => import("./screens/home/outlets/employee/outlets/AddEmployee/outlets/Others"));
+
+const NotFound = lazy(() => import("./screens/others/NotFound"));
 
 function App() {
   const auth = useSelector((state: RootState) => state.auth);
@@ -37,37 +49,173 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Navigate to={ROUTES.home} />} />
-      <Route path={ROUTES.auth} element={<AuthPage />}>
-        <Route path={ROUTES.login} element={<LoginPage />} />
-        <Route path={ROUTES.forgotPassword} element={<ForgotPasswordPage />} />
+      <Route
+        path={ROUTES.auth}
+        element={
+          <SuspenseWrapper>
+            <AuthPage />
+          </SuspenseWrapper>
+        }
+      >
+        <Route
+          path={ROUTES.login}
+          element={
+            <SuspenseWrapper>
+              <LoginPage />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.forgotPassword}
+          element={
+            <SuspenseWrapper>
+              <ForgotPasswordPage />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.resetPassword}
+          element={
+            <SuspenseWrapper>
+              <ResetPassword />
+            </SuspenseWrapper>
+          }
+        />
       </Route>
       <Route
         path={home}
         element={
           <PrivateRouter>
-            <HomePage />
+            <SuspenseWrapper>
+              <HomePage />
+            </SuspenseWrapper>
           </PrivateRouter>
         }
       >
-        <Route path={ROUTES.attendance} element={<AttendencePage />} />
-        <Route path={ROUTES.leave} element={<LeavePage />} />
-        <Route path={ROUTES.payroll} element={<PayrollPage />} />
-        <Route path={ROUTES.employee} element={<EmployeePage />}>
-          <Route path="" element={<EmployeeForm />} />
-          <Route path={ROUTES.add} element={<AddEmployee />}>
+        <Route
+          path={ROUTES.attendance}
+          element={
+            <SuspenseWrapper>
+              <AttendencePage />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.leave}
+          element={
+            <SuspenseWrapper>
+              <LeavePage />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.payroll}
+          element={
+            <SuspenseWrapper>
+              <PayrollPage />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.employee}
+          element={
+            <SuspenseWrapper>
+              <EmployeePage />
+            </SuspenseWrapper>
+          }
+        >
+          <Route
+            path=""
+            element={
+              <SuspenseWrapper>
+                <EmployeeForm />
+              </SuspenseWrapper>
+            }
+          />
+          <Route
+            path={ROUTES.add}
+            element={
+              <SuspenseWrapper>
+                <AddEmployee />
+              </SuspenseWrapper>
+            }
+          >
             <Route path="" element={<Navigate to={ROUTES.employeeInfor} />} />
-            <Route path={ROUTES.employeeInfor} element={<EmployeeInformation />} />
-            <Route path={ROUTES.contractInfor} element={<ContractInformation />} />
-            <Route path={ROUTES.employmentDetails} element={<EmploymentDetails />} />
-            <Route path={ROUTES.salaryWages} element={<SalaryWages />} />
-            <Route path={ROUTES.others} element={<Others />} />
+            <Route
+              path={ROUTES.employeeInfor}
+              element={
+                <SuspenseWrapper>
+                  <EmployeeInformation />
+                </SuspenseWrapper>
+              }
+            />
+            <Route
+              path={ROUTES.contractInfor}
+              element={
+                <SuspenseWrapper>
+                  <ContractInformation />
+                </SuspenseWrapper>
+              }
+            />
+            <Route
+              path={ROUTES.employmentDetails}
+              element={
+                <SuspenseWrapper>
+                  <EmploymentDetails />
+                </SuspenseWrapper>
+              }
+            />
+            <Route
+              path={ROUTES.salaryWages}
+              element={
+                <SuspenseWrapper>
+                  <SalaryWages />
+                </SuspenseWrapper>
+              }
+            />
+            <Route
+              path={ROUTES.others}
+              element={
+                <SuspenseWrapper>
+                  <Others />
+                </SuspenseWrapper>
+              }
+            />
           </Route>
         </Route>
-        <Route path={ROUTES.user} element={<UserPage />} />
-        <Route path={ROUTES.master} element={<MasterPage />} />
-        <Route path={ROUTES.settings} element={<SettingsPage />} />
+        <Route
+          path={ROUTES.user}
+          element={
+            <SuspenseWrapper>
+              <UserPage />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.master}
+          element={
+            <SuspenseWrapper>
+              <MasterPage />
+            </SuspenseWrapper>
+          }
+        />
+        <Route
+          path={ROUTES.settings}
+          element={
+            <SuspenseWrapper>
+              <SettingsPage />
+            </SuspenseWrapper>
+          }
+        />
       </Route>
-      <Route path="*" element={<NotFound />} />
+      <Route
+        path="*"
+        element={
+          <SuspenseWrapper>
+            <NotFound />
+          </SuspenseWrapper>
+        }
+      />
     </Routes>
   );
 }

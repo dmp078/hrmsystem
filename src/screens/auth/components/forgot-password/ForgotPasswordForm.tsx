@@ -20,7 +20,7 @@ const ForgotPasswordForm = (props: Props) => {
   const { formik, showToast, toggleToast } = props;
 
   return (
-    <div className="flex bg-[#F3F3F3] relative">
+    <div className="flex bg-[#F3F3F3] pb-6 relative">
       {showToast && (
         <div className="absolute top-6 right-6 py-3 px-4 gap-3 rounded-lg flex justify-between bg-red-600/[.2] text-red-600">
           <FormattedMessage id="auth.wrong.information" />

@@ -4,9 +4,6 @@ import TitleInputForm from "../../../../../../../commons/components/TitleInputFo
 import InputForm from "../../../../../../../commons/components/InputForm";
 import { useOutletContext } from "react-router-dom";
 import { Dropdown } from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
-import { v4 as uuid } from "uuid";
 
 const ContractInformation = () => {
   const [props]: Array<any> = useOutletContext();
@@ -14,26 +11,15 @@ const ContractInformation = () => {
   const [fileChoose, setFileChoose] = useState<any>(null);
   const [contractName, setContractName] = useState(null);
   const [date, setDate] = useState(null);
-  const [listContract, setListContract] = useState<any>([]);
 
-  const handleClickUpload = (e: any) => {
+  const handleClickUpload = () => {
     refUpload.current.click();
   };
 
   const handleChoose = (e: any) => {
+    props.removeErrorContract();
     setFileChoose(e.target.files ? e.target.files[0] : null);
     e.target.value = null;
-  };
-
-  const handleAdd = () => {
-    setListContract((pre: any) => [...pre, { contractName, date, file: fileChoose, id: uuid() }]);
-    setContractName(null);
-    setFileChoose(null);
-    setDate(null);
-  };
-
-  const handleDelete = (id: any) => {
-    setListContract((pre: any) => pre.filter((contract: any) => contract.id != id));
   };
 
   return (
@@ -147,7 +133,7 @@ const ContractInformation = () => {
                 </button>
                 <button
                   disabled={!fileChoose || !contractName || !date}
-                  onClick={handleAdd}
+                  onClick={() => props.handleAddContract(fileChoose, date, contractName)}
                   className={`${
                     !fileChoose || !contractName || !date ? "bg-gray-400" : "bg-[#69D9C1]"
                   } text-white text-xl py-2 w-full  rounded-xl`}
@@ -156,11 +142,19 @@ const ContractInformation = () => {
                 </button>
               </label>
 
-              <div className="px-8 mt-2">{fileChoose ? fileChoose.name : ""}</div>
+              <div className="px-8 mt-2">
+                {props.errorContract.message ? (
+                  <div className="text-red-500">{props.errorContract.message}</div>
+                ) : fileChoose ? (
+                  fileChoose.name
+                ) : (
+                  ""
+                )}
+              </div>
             </div>
           </div>
           <div className="h-[1px] w-full lg:w-[1px] lg:h-40 my-auto bg-slate-300"></div>
-          <div className="mt-3 w-full px-4 rounded-xl">
+          <div className="mt-3 w-full px-4 rounded-xl h-48 overflow-auto">
             <table
               style={{
                 borderCollapse: "separate",
@@ -179,19 +173,14 @@ const ContractInformation = () => {
                     <div>Action</div>
                   </td>
                 </tr>
-                {listContract.map((contract: any, id: any) => (
+                {props.listContract.map((contract: any, id: any) => (
                   <tr className="bg-[#F8F9FA] text-center" key={id}>
-                    <td>{contract.contractName}</td>
-                    <td>{contract.date}</td>
+                    <td>{contract.name}</td>
+                    <td>{contract.contract_date}</td>
                     <td className="text-center">
                       <div className="text-center flex gap-2">
                         <div className="mx-auto flex gap-2">
-                          <div>{contract.file.name}</div>
-                          <FontAwesomeIcon
-                            className="text-red-500 my-auto cursor-pointer"
-                            onClick={() => handleDelete(contract.id)}
-                            icon={faDeleteLeft}
-                          />
+                          <div>{contract.document || ""}</div>
                         </div>
                       </div>
                     </td>
