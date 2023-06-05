@@ -10,22 +10,24 @@ import { updateMarkToDelete } from "../../../../../../services/home/employee/mar
 
 const EmployeeForm = () => {
   const [
-    table,
-    loading,
-    updatePage,
-    listMarkedDelete,
-    handleMultiUpdateMark,
-    handleClickDelete,
-    showModal,
-    toggleShowModal,
-  ]: Array<any> = useOutletContext();
+    {
+      table,
+      loading,
+      updatePage,
+      listMarkedDelete,
+      handleMultiUpdateMark,
+      handleClickDelete,
+      showModal,
+      toggleShowModal,
+    },
+  ]: any = useOutletContext();
 
   return (
     <div className="w-[45vw] lg:w-[65vw] overflow-x-scroll">
       <div className="flex gap-2 text-sm ">
-        <a href={ROUTES.home} className="no-underline text-black">
+        <Link to={ROUTES.home} className="no-underline text-black">
           <FormattedMessage id="home.general" />
-        </a>
+        </Link>
         <p>{">"}</p>
         <div className="font-semibold">
           <FormattedMessage id="home.employee" />
@@ -74,20 +76,20 @@ const EmployeeForm = () => {
           </Button>
         </div>
 
-        <div className="w-fit h-fit my-auto">
-          <Modal show={showModal} style={{ margin: "auto" }}>
-            <Modal.Body style={{ margin: "auto" }}>
+        <div hidden={showModal ? false : true} className="absolute inset-0  z-50 flex">
+          <div className="px-12 py-4 bg-white shadow-md h-fit m-auto rounded-lg flex flex-col gap-4">
+            <div>
               <FormattedMessage id="employee.confirm.delete" />
-            </Modal.Body>
-            <Modal.Footer>
+            </div>
+            <div className="flex gap-2 mx-auto">
               <Button onClick={() => toggleShowModal(false)} variant="secondary">
                 {<FormattedMessage id="no" />}
               </Button>
               <Button onClick={handleClickDelete} variant="primary">
                 {<FormattedMessage id="yes" />}
               </Button>
-            </Modal.Footer>
-          </Modal>
+            </div>
+          </div>
         </div>
 
         <div className=" h-[1px] w-full bg-slate-300 mt-12 "></div>
@@ -105,12 +107,7 @@ const EmployeeForm = () => {
             <tbody className="w-full">
               <tr className="w-full mx-2 relative h-full bg-[#F8F9FA] brightness-90">
                 <th>
-                  <input
-                    onClick={handleMultiUpdateMark}
-                    // checked={listHeaderEmployee.length ? true : false}
-                    type="checkbox"
-                    className="mt-[10px] mx-3 h-5"
-                  />
+                  <input onClick={handleMultiUpdateMark} type="checkbox" className="mt-[10px] mx-3 h-5" />
                 </th>
 
                 {listHeaderEmployee.map((item, id) => (

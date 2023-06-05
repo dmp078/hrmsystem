@@ -1,12 +1,15 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { listGeneralHome } from "../../assets/constants/listGeneralHome";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { ROUTES } from "../../configs/routes/ROUTES";
 import { FormattedMessage } from "react-intl";
 import { listAdvance } from "../../assets/constants/listAdvance";
 
 const Menubar = () => {
+  const url = useLocation();
   const [activePath, setActivePath] = useState<string>(window.location.pathname);
+
+  useEffect(() => setActivePath(url.pathname), [url.pathname]);
 
   return (
     <div className="h-full w-80 fixed top-11 bottom-0 pt-8 px-4 bg-white z-50">

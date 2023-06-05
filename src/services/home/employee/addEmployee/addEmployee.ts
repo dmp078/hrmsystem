@@ -6,6 +6,7 @@ import {
   IothersParams,
   IsalaryWagesParams,
 } from "../../../../models/home/employeeAddParams";
+import { EMPLOYEE_ACTIONS } from "../../../../redux/actions/home/actions";
 import { store } from "../../../../redux/store";
 
 export const addEmployee = async (
@@ -32,7 +33,8 @@ export const addEmployee = async (
         },
       }
     );
+    store.dispatch({ type: EMPLOYEE_ACTIONS.DELETE_EMPLOYEE, payload: {} });
   } catch (er) {
-    Promise.reject(er);
+    console.log(er);
   }
 };

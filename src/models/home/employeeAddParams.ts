@@ -34,11 +34,11 @@ export interface IemploymentDetailsParams {
 }
 
 export interface IsalaryWagesParams {
-  basic_salary: number;
-  audit_salary: number;
-  safety_insurance: number;
-  health_insurance: number;
-  meal_allowance: number;
+  basic_salary: number | string;
+  audit_salary: number | string;
+  safety_insurance: number | string;
+  health_insurance: number | string;
+  meal_allowance: number | string;
 }
 
 export interface IothersParams {

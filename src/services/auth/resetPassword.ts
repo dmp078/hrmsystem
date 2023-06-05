@@ -1,8 +1,6 @@
 import { axiosClient } from "../../configs/api";
 import { ROUTES } from "../../configs/routes/ROUTES";
 import { IresetPasswordParams } from "../../models/auth/resetPassword";
-import { store } from "../../redux/store";
-import { onLogout } from "./logout";
 
 export const resetPassword = async (values: IresetPasswordParams) => {
   try {
@@ -22,7 +20,7 @@ export const resetPassword = async (values: IresetPasswordParams) => {
       }
     );
 
-    onLogout();
+    window.location.replace(ROUTES.login);
   } catch (er) {
     Promise.reject(er);
   }

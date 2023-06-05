@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { ROUTES } from "../../../../../../../configs/routes/ROUTES";
-import { Button } from "react-bootstrap";
-import { Link, Outlet } from "react-router-dom";
+import { Button, Spinner } from "react-bootstrap";
+import { Link, Outlet, useNavigate, useOutletContext } from "react-router-dom";
 import {
   IcontractInformationParams,
   IemployeeInformationParams,
@@ -19,9 +19,14 @@ import { getMarriageStatus } from "../../../../../../../services/home/employee/e
 import { listRequirer } from "../../../../../../../assets/constants/listRequirer";
 import { getContract } from "../../../../../../../services/home/employee/contract/getContract";
 import { addContract } from "../../../../../../../services/home/employee/contract/addContract";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
 
 const AddEmployee = () => {
+  const [props]: Array<any> = useOutletContext();
   const [path, setPath] = useState<string>(window.location.pathname);
+  const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const [employeeInformation, setEmployeeInformation] = useState<IemployeeInformationParams>({
     bank_account_no: -1,
@@ -131,31 +136,11 @@ const AddEmployee = () => {
   };
 
   const handleAddEmployee = async () => {
-    const eInforFilter = Object.entries(employeeInformation).filter((item: any) => item[1] !== -1 && item[1] !== "");
-    const eInforDataToPass = Object.fromEntries(eInforFilter);
+    setLoading(true);
+    await props.callAddEmployee(employeeInformation, contractInformation, employmentDetails, salaryWages, others);
+    setLoading(false);
 
-    const eDetailFilter = Object.entries(employmentDetails).filter((item: any) => item[1] !== -1 && item[1] !== "");
-    const eDetailDataToPass = Object.fromEntries(eDetailFilter);
-
-    const othersFilter = Object.entries(others).filter((item: any) => item[1] !== -1 && item[1] !== "");
-    const othersDataToPass = Object.fromEntries(othersFilter);
-
-    if (others.benefits.length) Object.assign(othersDataToPass, { benefits: [...others.benefits] });
-
-    try {
-      await addEmployee(
-        eInforDataToPass as any,
-        contractInformation,
-        eDetailDataToPass as any,
-        salaryWages,
-        othersDataToPass as any
-      );
-
-      // thanh cong thi redirect ve trang employee list
-      window.location.replace(ROUTES.home + "/" + ROUTES.employee);
-    } catch (er) {
-      alert(er);
-    }
+    navigate(ROUTES.home + "/" + ROUTES.employee);
   };
 
   const removeErrorContract = () => {
@@ -165,9 +150,9 @@ const AddEmployee = () => {
   return (
     <div className="relative w-[45vw] lg:w-[65vw] h-screen ">
       <div className="flex gap-2 text-sm ">
-        <a href={ROUTES.home} className="no-underline text-black">
+        <Link to={ROUTES.home} className="no-underline text-black">
           <FormattedMessage id="home.general" />
-        </a>
+        </Link>
         <p>{">"}</p>
         <Link to={"../../" + ROUTES.employee} className="no-underline text-black">
           <FormattedMessage id="home.employee" />
@@ -195,7 +180,12 @@ const AddEmployee = () => {
                 contractInformation[field as keyof IcontractInformationParams] === -1 ||
                 contractInformation[field as keyof IcontractInformationParams] === ""
             ).length ||
-            listRequirer.salaryWages.filter((field) => salaryWages[field as keyof IsalaryWagesParams] === -1).length
+            listRequirer.salaryWages.filter(
+              (field) =>
+                salaryWages[field as keyof IsalaryWagesParams] === -1 ||
+                salaryWages[field as keyof IsalaryWagesParams] === ""
+            ).length ||
+            loading
               ? true
               : false
           }
@@ -217,8 +207,10 @@ const AddEmployee = () => {
                 : "gray"
             }`,
             color: "white",
+            display: "flex",
           }}
         >
+          <Spinner hidden={loading ? false : true} style={{ width: "20px", height: "20px", marginRight: "10px" }} />
           <FormattedMessage id="add" />
         </Button>
       </div>
@@ -250,6 +242,7 @@ const AddEmployee = () => {
           } py-2 px-4 rounded-lg no-underline`}
         >
           <FormattedMessage id="add.employee.information" />
+          <FontAwesomeIcon className="pl-2" icon={faCircleInfo} />
         </Link>
 
         <Link
@@ -278,6 +271,7 @@ const AddEmployee = () => {
           } py-2 px-4 rounded-lg no-underline`}
         >
           <FormattedMessage id="add.contract.information" />
+          <FontAwesomeIcon className="pl-2" icon={faCircleInfo} />
         </Link>
 
         <Link
@@ -296,20 +290,27 @@ const AddEmployee = () => {
           className={`${
             path.includes(ROUTES.salaryWages)
               ? `${
-                  listRequirer.salaryWages.filter((field) => salaryWages[field as keyof IsalaryWagesParams] === -1)
-                    .length
+                  listRequirer.salaryWages.filter(
+                    (field) =>
+                      salaryWages[field as keyof IsalaryWagesParams] === -1 ||
+                      salaryWages[field as keyof IsalaryWagesParams] === ""
+                  ).length
                     ? "text-[#FFEFEF] bg-[#EF6165]"
                     : "text-white bg-[#0091FF]"
                 }`
               : `${
-                  listRequirer.salaryWages.filter((field) => salaryWages[field as keyof IsalaryWagesParams] === -1)
-                    .length
+                  listRequirer.salaryWages.filter(
+                    (field) =>
+                      salaryWages[field as keyof IsalaryWagesParams] === -1 ||
+                      salaryWages[field as keyof IsalaryWagesParams] === ""
+                  ).length
                     ? "text-[#EF6165] bg-[#FFEFEF]"
                     : "text-[#0091FF] bg-[#E1F0FF]"
                 }`
           } py-2 px-4 rounded-lg no-underline`}
         >
           <FormattedMessage id="add.salary.wages" />
+          <FontAwesomeIcon className="pl-2" icon={faCircleInfo} />
         </Link>
 
         <Link

@@ -9,6 +9,7 @@ import { onLogout } from "../../services/auth/logout";
 import { ROUTES } from "../../configs/routes/ROUTES";
 import { useOnClickOutside } from "../hooks/useClickOutside";
 import { updateLang } from "../../services/intl/updateLang";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const refModalProfile = useRef(null);
@@ -83,9 +84,9 @@ const Navbar = () => {
                 <FormattedMessage id="auth.signout" />
               </Button>
 
-              <a href={ROUTES.home + "/" + ROUTES.settings} className="text-[#0091FF] no-underline mx-auto">
+              <Link to={ROUTES.home + "/" + ROUTES.settings} className="text-[#0091FF] no-underline mx-auto">
                 <FormattedMessage id="auth.change.password" />
-              </a>
+              </Link>
             </div>
           )}
 
