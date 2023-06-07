@@ -19,7 +19,7 @@
   "auth.confirm.send.otp": "Confirm & Send OTP",
   "auth.back.to.signin": "Back to Sign In",
   "auth.wrong.information": "Wrong username or password!",
-  "auth.matched.information": "Success!",
+  "success": "Success!",
   "language.en": "England",
   "language.vi": "Vietnam",
   "home.attendance" : "Attendance Management",

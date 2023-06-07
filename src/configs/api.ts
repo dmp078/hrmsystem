@@ -7,11 +7,11 @@ export const axiosClient = axios.create({
   baseURL: baseApiUrl,
 });
 
-export const axiosPrivate = axios.create({
+export const axiosEmployee = axios.create({
   baseURL: baseApiUrl,
 });
 
-axiosPrivate.interceptors.response.use(
+axiosEmployee.interceptors.response.use(
   (res) => {
     res.data.data.data = res.data.data.data.map((item: any) => ({
       ...item,
@@ -21,6 +21,7 @@ axiosPrivate.interceptors.response.use(
     return res.data.data;
   },
   (error) => {
+    // token het han
     onLogout();
   }
 );

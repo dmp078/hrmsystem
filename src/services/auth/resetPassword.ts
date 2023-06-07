@@ -21,7 +21,7 @@ export const resetPassword = async (values: IresetPasswordParams) => {
     );
 
     window.location.replace(ROUTES.login);
-  } catch (er) {
-    Promise.reject(er);
+  } catch (er: any) {
+    throw new Error(er.response.data.message);
   }
 };

@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { IforgotPasswordParams } from "../../../../models/auth/forgotPasswordAuth";
@@ -6,24 +6,34 @@ import { logoHR } from "../../../../assets/images";
 import { ROUTES } from "../../../../configs/routes/ROUTES";
 import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 interface Props {
-  formik: any;
   showToast: boolean;
   toggleToast: (payload: boolean) => void;
+  loading: boolean;
+  erMessage: string;
+  handleSubmit: (values: IforgotPasswordParams) => void;
+  upadteErMessage: (payload: string) => void;
 }
 
 const ForgotPasswordForm = (props: Props) => {
-  const { formik, showToast, toggleToast } = props;
+  const [email, setEmail] = useState<string>("");
+  const { showToast, toggleToast, loading, erMessage, upadteErMessage, handleSubmit } = props;
+
+  const handleChangeEmail = (e: any) => {
+    setEmail(e.target.value);
+
+    upadteErMessage("");
+  };
 
   return (
     <div className="flex bg-[#F3F3F3] pb-6 relative">
       {showToast && (
-        <div className="absolute top-6 right-6 py-3 px-4 gap-3 rounded-lg flex justify-between bg-red-600/[.2] text-red-600">
-          <FormattedMessage id="auth.wrong.information" />
+        <div className="absolute top-6 right-6 py-3 px-4 gap-3 rounded-lg flex justify-between bg-green-600/[.2] text-green-600">
+          <FormattedMessage id="success" />
           <FontAwesomeIcon className="my-auto cursor-pointer" icon={faCircleXmark} onClick={() => toggleToast(false)} />
         </div>
       )}
@@ -35,28 +45,30 @@ const ForgotPasswordForm = (props: Props) => {
           </div>
         </div>
 
-        {/* form login */}
-        <form onSubmit={formik.handleSubmit} action="" className="p-6 bg-[#FBFCFD] mt-6 rounded-xl flex flex-col gap-6">
+        {/* form forgot password */}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit({ email });
+          }}
+          action=""
+          className="p-6 bg-[#FBFCFD] mt-6 rounded-xl flex flex-col gap-6"
+        >
           <div className="flex flex-col gap-2 font-semibold">
             <FormattedMessage id="auth.email" />
             <input
               type="email"
               id="email"
               name="email"
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              className={`${
-                formik.errors.email ? "bg-[#ff9494]/[.2] border-2 border-[#ff9494]/[.2]" : "bg-[#F1F3F5]"
-              } w-full p-3 outline-none rounded-xl`}
+              value={email}
+              onChange={handleChangeEmail}
+              className={`bg-[#F1F3F5] w-full p-3 outline-none rounded-xl`}
             />
-            {!!formik.errors.email && (
-              <div className="text-red-500">
-                <FormattedMessage id={formik.errors.email} />
-              </div>
-            )}
+            {erMessage && <div className="text-red-500">{erMessage}</div>}
           </div>
 
-          <Button type="submit" className="p-3">
+          <Button disabled={loading ? true : false} type="submit" className="p-3">
+            <Spinner hidden={loading ? false : true} style={{ width: "20px", height: "20px", marginRight: "10px" }} />
             <FormattedMessage id="auth.confirm.send.otp" />
           </Button>
           <Link to={"../" + ROUTES.login} className="text-[#0091FF] text-center no-underline">

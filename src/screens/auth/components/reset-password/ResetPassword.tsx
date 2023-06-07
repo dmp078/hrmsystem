@@ -15,6 +15,7 @@ const ResetPassword = () => {
   const [viewPassword, setViewPassword] = useState<boolean>(false);
   const [viewConfirmPassword, setViewConfirmPassword] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [er, setEr] = useState<string>("");
 
   const location = useLocation;
   const formik = useFormik({
@@ -28,14 +29,16 @@ const ResetPassword = () => {
     }),
     onSubmit: async (values: any) => {
       setLoading(true);
-
-      await resetPassword({
-        ...values,
-        token: query.get("token"),
-        company_id: query.get("company_id"),
-        email: query.get("email"),
-      });
-
+      try {
+        await resetPassword({
+          ...values,
+          token: query.get("token"),
+          company_id: query.get("company_id"),
+          email: query.get("email"),
+        });
+      } catch (er: any) {
+        setEr(er.message);
+      }
       setLoading(false);
     },
   });
@@ -72,7 +75,10 @@ const ResetPassword = () => {
               <input
                 name="password"
                 value={formik.values.password}
-                onChange={formik.handleChange}
+                onChange={(e: any) => {
+                  formik.handleChange(e);
+                  setEr("");
+                }}
                 type={`${viewPassword ? "text" : "password"}`}
                 className="py-3 pl-4 w-80 bg-[#F1F3F5] rounded-lg outline-none"
               />
@@ -104,7 +110,10 @@ const ResetPassword = () => {
               <input
                 name="confirmPassword"
                 value={formik.values.confirmPassword}
-                onChange={formik.handleChange}
+                onChange={(e: any) => {
+                  formik.handleChange(e);
+                  setEr("");
+                }}
                 type={`${viewConfirmPassword ? "text" : "password"}`}
                 className="py-3 pl-4 w-80 bg-[#F1F3F5] rounded-lg outline-none"
               />
@@ -129,6 +138,7 @@ const ResetPassword = () => {
                 <FormattedMessage id={formik.errors.confirmPassword} />
               </div>
             )}
+            {er && <div className="text-red-500 text-center max-w-[300px] mx-auto">{er}</div>}
           </div>
 
           <Button disabled={loading ? true : false} type="submit" className="p-3">

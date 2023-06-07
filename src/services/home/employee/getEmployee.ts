@@ -1,11 +1,11 @@
-import { axiosPrivate } from "../../../configs/api";
+import { axiosEmployee } from "../../../configs/api";
 import { ROUTES } from "../../../configs/routes/ROUTES";
 import { EMPLOYEE_ACTIONS } from "../../../redux/actions/home/actions";
 import { store } from "../../../redux/store";
 
 export const getEmployee = async (pageNumber: number) => {
   try {
-    const res = await axiosPrivate(ROUTES.employee, {
+    const res = await axiosEmployee(ROUTES.employee, {
       headers: { Authorization: `Bearer ${store.getState().auth.token}` },
       params: {
         page: pageNumber,

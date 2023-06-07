@@ -13,7 +13,7 @@ export const getContract = async () => {
     });
 
     return res.data.data;
-  } catch (er) {
-    Promise.reject(er);
+  } catch (error: any) {
+    throw new Error(error.response.data.message);
   }
 };

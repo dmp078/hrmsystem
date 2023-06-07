@@ -19,7 +19,7 @@
   "auth.confirm.send.otp": "Xác nhận và ửi OTP",
   "auth.back.to.signin": "Quay lại Đăng Nhập",
   "auth.wrong.information": "Sai tài khoản hoặc mật khẩu!",
-  "auth.matched.information": "Thành công!",
+  "success": "Thành công!",
   "language.en": "Anh",
   "language.vi": "Việt Nam",
   "home.attendance" : "Quản lý chấm công",

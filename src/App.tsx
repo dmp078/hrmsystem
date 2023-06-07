@@ -57,6 +57,7 @@ function App() {
           </SuspenseWrapper>
         }
       >
+        <Route path="" element={<Navigate to={ROUTES.login} />} />
         <Route
           path={ROUTES.login}
           element={
