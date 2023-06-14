@@ -182,7 +182,7 @@ const EmployeeForm = () => {
               >
                 1
               </button>
-              {table?.last_page - 3 > 1 && <div className="mt-3 mx-2">...</div>}
+              {table?.last_page - 3 > 1 && <div className="mt-2 mx-2">...</div>}
               {table?.last_page - 2 > 1 && (
                 <button
                   onClick={() => updatePage(table?.last_page - 2)}
@@ -233,7 +233,7 @@ const EmployeeForm = () => {
                 {table?.current_page + 2}
               </button>
 
-              {table?.current_page + 3 < table?.last_page && <div className="mx-2 mt-4">...</div>}
+              {table?.current_page + 3 < table?.last_page && <div className="mt-2 mx-2">...</div>}
               <button onClick={() => updatePage(table?.last_page)} className={`px-3 py-2 bg-[#F1F3F5] rounded-lg`}>
                 {table?.last_page}
               </button>
